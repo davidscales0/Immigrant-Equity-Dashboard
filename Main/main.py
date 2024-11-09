@@ -1,14 +1,14 @@
 """ 
 Immigrant Equity Dashboard
 David Scales, Northeastern University COS
-
-
+October 2024
 """
 
 import panel as pn
 import plotly.express as px
-from fb_info_api import FBAPI
+from fbapi import FBAPI
 import pandas as pd
+import os
 
 pn.extension()
 
@@ -16,19 +16,23 @@ api = FBAPI()
 
 #Necessary modules are imported, panel is initialized, and an instance of 'api' is defined for use of FBAPI (other submitted file)
 
-api.load_df('Annex_A.xlsx')
+dir_id = os.path.dirname(__file__)
+data_dir = os.path.join(dir_id, '..', 'Raw Data')
+
+api.load_df(os.path.join(data_dir, 'Annex_A.xlsx'))
+
 fb_df = api.make_fb_df()
 
-api.load_df('Annex_B.xlsx', 'B8')
+api.load_df(os.path.join(data_dir, 'Annex_B.xlsx'), 'B8')
 employment_df = api.make_employment_df()
 
-api.load_df('Annex_B.xlsx', 'B2')
+api.load_df(os.path.join(data_dir, 'Annex_B.xlsx'), 'B2')
 education_df = api.make_education_df()
 
-api.load_df('Annex_C.xlsx', 'C1')
+api.load_df(os.path.join(data_dir, 'Annex_C.xlsx'), 'C1')
 poverty_df = api.make_poverty_df()
 
-api.load_df('Annex_E.xlsx', 'E2')
+api.load_df(os.path.join(data_dir, 'Annex_E.xlsx'), 'E2')
 literacy_df = api.make_literacy_df()
 
 #api is used to load several data frames, data exists across 4 files (2 tabs in Annex_B), so api is loaded for each necessary instance
